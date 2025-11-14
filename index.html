@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>我的第一个 AR 场景</title>
+    <title>我的 NFT 图像识别 AR</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
   </head>
 
   <body style="margin : 0px; overflow: hidden;">
     
-    <a-scene embedded arjs>
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
 
-      <a-marker preset="hiro">
+      <a-nft
+        type="nft"
+        url="https://ll249512090-pixel.github.io/test/" 
+        smooth="true"
+        smoothCount="10">
         
-        <a-box color="red" position="0 0.5 0" rotation="0 45 0"></a-box>
+        <a-box color="red" position="50 150 -100" scale="50 50 50"></a-box>
 
-      </a-marker>
+      </a-nft>
 
       <a-entity camera></a-entity>
     
