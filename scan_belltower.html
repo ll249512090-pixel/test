@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFT AR 扫描 (钟楼)</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+</head>
+<body style="margin : 0px; overflow: hidden;">
+
+    <a id="continue-button" href="save_clue_B.html">
+        我已看到线索 (点击继续)
+    </a>
+    <style>
+        #continue-button {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%); font-size: 1.2em;
+            padding: 20px 30px; background: #007aff;
+            color: white; border-radius: 12px;
+            z-index: 10000; text-decoration: none;
+        }
+    </style>
+
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+
+      <a-nft
+        type="nft"
+        url="https://ll249512090-pixel.github.io/test/钟楼" 
+        smooth="true"
+        smoothCount="10">
+
+        <a-sphere 
+            color="blue" 
+            position="0 0.25 0" 
+            radius="0.15">
+        </a-sphere>
+
+      </a-nft>
+
+      <a-entity camera></a-entity>
+
+    </a-scene>
+</body>
+</html>
