@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园寻宝 - 游戏大厅</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        #status-box { background: #f4f4f4; padding: 15px; border-radius: 8px; }
+        #quest-popup {
+            display: none; /* 默认隐藏 */
+            background: #007aff;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            animation: fadeIn 1s;
+        }
+        #quest-button {
+            font-size: 1.2em;
+            padding: 15px 30px;
+            background: white;
+            color: #007aff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <h1>校园寻宝</h1>
+    
+    <div id="status-box">
+        <p><strong>状态:</strong> <span id="status-message">正在初始化 GPS...</span></p>
+        <p><strong>我的位置:</strong> <span id="status-coords">...</span></p>
+        <p><strong>距离目标:</strong> <span id="status-distance">...</span> 米</p>
+    </div>
+
+    <div id="quest-popup">
+        <h2>🎉 您已到达目标区域！</h2>
+        <p>请开始“图书馆的秘密”主线任务。</p>
+        <button id="quest-button">开始扫描</button>
+    </div>
+
+    <script>
+        // --- 您需要在这里配置您的游戏 ---
+
+        // 1. 设置您的“目标点” (比如图书馆)
+        // (请使用您刚刚在 gpstest.html 中测试成功的那个坐标！)
+        const TARGET_LATITUDE = 34.2196766; // 替换为您的纬度
+        const TARGET_LONGITUDE = 117.1422697; // 替换为您的经度
+
+        // 2. 设置“触发半径” (单位：米)
+        const ZONE_RADIUS_METERS = 15; // 15米范围内触发
+
+        // 3. 设置“扫描页面”的网址
+        // (这就是我们刚刚重命名的 scan_library.html)
+        const TARGET_SCAN_URL = 'https://ll249512090-pixel.github.io/test/scan_library.html';
+
+        // --- 下面是游戏逻辑，您不需要修改 ---
+
+        // 获取 HTML 元素
+        const statusMsg = document.getElementById('status-message');
+        const statusCoords = document.getElementById('status-coords');
+        const statusDistance = document.getElementById('status-distance');
+        const questPopup = document.getElementById('quest-popup');
+        const questButton = document.getElementById('quest-button');
+
+        // 绑定按钮点击事件
+        questButton.onclick = function() {
+            statusMsg.innerText = "正在跳转到 AR 扫描模块...";
+            window.location.href = TARGET_SCAN_URL; // 跳转页面
+        };
+
+        // 启动 GPS 持续监视
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(onSuccess, onError, {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            });
+        } else {
+            statusMsg.innerText = "❌ 错误：您的浏览器不支持 GPS。";
+        }
+
+        // GPS 成功的回调 (每次位置更新都会调用)
+        function onSuccess(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            // 1. 更新 UI
+            statusMsg.innerText = "GPS 信号良好，正在游戏中...";
+            statusCoords.innerText = `${userLat.toFixed(6)}, ${userLon.toFixed(6)}`;
+            
+            // 2. 计算距离
+            const distance = getDistance(userLat, userLon, TARGET_LATITUDE, TARGET_LONGITUDE);
+            statusDistance.innerText = distance.toFixed(1);
+
+            // 3. 检查是否进入区域
+            if (distance < ZONE_RADIUS_METERS) {
+                questPopup.style.display = 'block'; // 显示弹窗
+            } else {
+                questPopup.style.display = 'none'; // 隐藏弹窗
+            }
+        }
+
+        // GPS 失败的回调
+        function onError(error) {
+            statusMsg.innerText = `❌ GPS 错误: ${error.message}`;
+        }
+
+        // --- (关键) 计算两个 GPS 点距离的函数 (Haversine 公式) ---
+        // (您不需要懂，只需要知道它能用)
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // 地球半径 (米)
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                      Math.cos(φ1) * Math.cos(φ2) *
+                      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // 返回距离 (米)
+        }
+
+    </script>
+</body>
+</html>
