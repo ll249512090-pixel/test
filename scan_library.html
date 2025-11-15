@@ -55,37 +55,42 @@
 
 <button id="capture-button">获取线索</button>
 
+<button id="capture-button">获取线索</button>
+
 <script>
-    // 1. 获取“AR标记”(<a-nft>) 和 “2D按钮”
-    const nftMarker = document.querySelector('a-nft');
-    const button = document.getElementById('capture-button');
-    const returnURL = 'https://ll249512090-pixel.github.io/test/'; // 您的主页
+    // (新!) 我们把所有代码都放进 "window.onload" 里
+    // 这会“耐心等待”页面所有内容(包括A-Frame)都加载完毕后，才执行
+    window.addEventListener('load', function() {
 
-    // 2. (关键) 监听“标记被找到”事件
-    nftMarker.addEventListener('markerFound', function() {
-        button.style.display = 'block'; // 显示 2D 按钮
-    });
+        // 1. 获取“AR标记”(<a-nft>) 和 “2D按钮”
+        const nftMarker = document.querySelector('a-nft');
+        const button = document.getElementById('capture-button');
+        const returnURL = 'https://ll249512090-pixel.github.io/test/'; 
 
-    // 3. (关键) 监听“标记丢失”事件
-    nftMarker.addEventListener('markerLost', function() {
-        button.style.display = 'none'; // 隐藏 2D 按钮
-    });
+        // 2. 监听“标记被找到”事件
+        nftMarker.addEventListener('markerFound', function() {
+            button.style.display = 'block'; // 显示 2D 按钮
+        });
 
-    // 4. (关键) 监听“2D 按钮”的点击事件
-    button.addEventListener('click', function() {
+        // 3. 监听“标记丢失”事件
+        nftMarker.addEventListener('markerLost', function() {
+            button.style.display = 'none'; // 隐藏 2D 按钮
+        });
 
-        // 5. 存档
-        localStorage.setItem('library_quest_complete', 'true');
+        // 4. 监听“2D 按钮”的点击事件
+        button.addEventListener('click', function() {
+            localStorage.setItem('library_quest_complete', 'true');
+            alert('恭喜！获得线索A，即将返回主地图！');
+            window.location.href = returnURL;
+        });
 
-        // 6. 提示并跳转
-        alert('恭喜！获得线索A，即将返回主地图！');
-        window.location.href = returnURL;
-    });
+    }); // (新!) "window.onload" 的结尾
 </script>
 </body>
 </html>
   </body>
 </html>
+
 
 
 
