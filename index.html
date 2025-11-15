@@ -31,7 +31,7 @@
 <body>
 
     <h1>校园寻宝</h1>
-    
+
     <div id="status-box">
         <p><strong>状态:</strong> <span id="status-message">正在初始化 GPS...</span></p>
         <p><strong>我的位置:</strong> <span id="status-coords">...</span></p>
@@ -40,35 +40,29 @@
 
     <div id="quest-popup">
         <h2>🎉 您已到达目标区域！</h2>
-        <p>请开始“图书馆的秘密”主线任务。</p>
+        <p>...</p>
         <button id="quest-button">开始扫描</button>
     </div>
 
     <script>
         // --- 您需要在这里配置您的游戏 ---
 
-// 1. 设置您的“目标点”
+        // 1. 设置您的“目标点”
 
-// (目标点 A: 图书馆)
-// ‼️ 已更新为您的真实坐标和新半径
-const TARGET_A_LATITUDE = 34.2195645; // 您的“图书馆”纬度
-const TARGET_A_LONGITUDE = 117.1423631; // 您的“图书馆”经度
-const TARGET_A_RADIUS = 20; // ‼️ 已更新为 20 米
-const TARGET_A_URL = 'scan_library.html'; 
+        // (目标点 A: 图书馆)
+        // ‼️ 已更新为您的真实坐标和新半径
+        const TARGET_A_LATITUDE = 34.2195645; // 您的“图书馆”纬度
+        const TARGET_A_LONGITUDE = 117.1423631; // 您的“图书馆”经度
+        const TARGET_A_RADIUS = 20; // ‼️ 已更新为 20 米
+        const TARGET_A_URL = 'scan_library.html'; 
 
-// (目标点 B: 钟楼)
-// ‼️ 我为您设置了一个距离图书馆约 30-40 米的“假”坐标，用于测试
-const TARGET_B_LATITUDE = 34.2198645; // ‼️ 钟楼假纬度
-const TARGET_B_LONGITUDE = 117.1426631; // ‼️ 钟楼假经度
-const TARGET_B_RADIUS = 15; // 钟楼的触发半径
-const TARGET_B_URL = 'scan_belltower.html'; // (您之后需要创建这个)
+        // (目标点 B: 钟楼)
+        // ‼️ 我为您设置了一个距离图书馆约 30-40 米的“假”坐标，用于测试
+        const TARGET_B_LATITUDE = 34.2198645; // ‼️ 钟楼假纬度
+        const TARGET_B_LONGITUDE = 117.1426631; // ‼️ 钟楼假经度
+        const TARGET_B_RADIUS = 15; // 钟楼的触发半径
+        const TARGET_B_URL = 'scan_belltower.html'; // (您之后需要创建这个)
 
-// (目标点 B: 钟楼)
-// (‼️ 您之后需要去室外获取“钟楼”的真实坐标)
-const TARGET_B_LATITUDE = 31.98765; // ‼️ 替换为您的“钟楼”纬度 (这是个假数据)
-const TARGET_B_LONGITUDE = 121.65432; // ‼️ 替换为您的“钟楼”经度 (这是个假数据)
-const TARGET_B_RADIUS = 15; // 钟楼的触发半径
-const TARGET_B_URL = 'scan_belltower.html'; // 钟楼的扫描页 (您之后需要创建这个文件)
 
         // --- 下面是游戏逻辑，您不需要修改 ---
 
@@ -78,12 +72,6 @@ const TARGET_B_URL = 'scan_belltower.html'; // 钟楼的扫描页 (您之后需�
         const statusDistance = document.getElementById('status-distance');
         const questPopup = document.getElementById('quest-popup');
         const questButton = document.getElementById('quest-button');
-
-        // 绑定按钮点击事件
-        questButton.onclick = function() {
-            statusMsg.innerText = "正在跳转到 AR 扫描模块...";
-            window.location.href = TARGET_SCAN_URL; // 跳转页面
-        };
 
         // 启动 GPS 持续监视
         if (navigator.geolocation) {
@@ -97,55 +85,50 @@ const TARGET_B_URL = 'scan_belltower.html'; // 钟楼的扫描页 (您之后需�
         }
 
         // GPS 成功的回调 (每次位置更新都会调用)
-// GPS 成功的回调 (每次位置更新都会调用)
-function onSuccess(position) {
-    const userLat = position.coords.latitude;
-    const userLon = position.coords.longitude;
+        function onSuccess(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
 
-    // 1. 更新 UI
-    statusMsg.innerText = "GPS 信号良好，正在游戏中...";
-    statusCoords.innerText = `${userLat.toFixed(6)}, ${userLon.toFixed(6)}`;
+            // 1. 更新 UI
+            statusMsg.innerText = "GPS 信号良好，正在游戏中...";
+            statusCoords.innerText = `${userLat.toFixed(6)}, ${userLon.toFixed(6)}`;
 
-    // 2. (关键!) 检查“游戏存档”
-    // 检查 'library_quest_complete' 是否为 'true'
-    const libraryComplete = localStorage.getItem('library_quest_complete') === 'true';
+            // 2. (关键!) 检查“游戏存档”
+            const libraryComplete = localStorage.getItem('library_quest_complete') === 'true';
 
-    // 3. 计算距离
-    const distanceToA = getDistance(userLat, userLon, TARGET_A_LATITUDE, TARGET_A_LONGITUDE);
-    const distanceToB = getDistance(userLat, userLon, TARGET_B_LATITUDE, TARGET_B_LONGITUDE);
+            // 3. 计算距离
+            const distanceToA = getDistance(userLat, userLon, TARGET_A_LATITUDE, TARGET_A_LONGITUDE);
+            const distanceToB = getDistance(userLat, userLon, TARGET_B_LATITUDE, TARGET_B_LONGITUDE);
 
-    // 更新距离显示，让它显示两个
-    statusDistance.innerText = `距图书馆: ${distanceToA.toFixed(1)}m | 距钟楼: ${distanceToB.toFixed(1)}m`;
+            statusDistance.innerText = `距图书馆: ${distanceToA.toFixed(1)}m | 距钟楼: ${distanceToB.toFixed(1)}m`;
 
-    // 4. (关键!) 检查游戏逻辑 (联动！)
+            // 4. (关键!) 检查游戏逻辑 (联动！)
 
-    // 【逻辑 A】: 如果“没完成”图书馆任务，并且靠近了图书馆
-    if (libraryComplete === false && distanceToA < TARGET_A_RADIUS) {
-        questPopup.style.display = 'block'; // 显示弹窗
-        questPopup.querySelector('h2').innerText = '🎉 您已到达图书馆！';
-        questPopup.querySelector('p').innerText = '请开始“图书馆的秘密”主线任务。';
+            // 【逻辑 A】: 如果“没完成”图书馆任务，并且靠近了图书馆
+            if (libraryComplete === false && distanceToA < TARGET_A_RADIUS) {
+                questPopup.style.display = 'block'; // 显示弹窗
+                questPopup.querySelector('h2').innerText = '🎉 您已到达图书馆！';
+                questPopup.querySelector('p').innerText = '请开始“图书馆的秘密”主线任务。';
 
-        // 绑定按钮，让它跳转到“图书馆扫描页”
-        questButton.onclick = function() {
-            window.location.href = TARGET_A_URL;
-        };
+                questButton.onclick = function() {
+                    window.location.href = TARGET_A_URL;
+                };
 
-    // 【逻辑 B】: 如果“已完成”图书馆任务，并且靠近了钟楼
-    } else if (libraryComplete === true && distanceToB < TARGET_B_RADIUS) {
-        questPopup.style.display = 'block'; // 显示弹窗
-        questPopup.querySelector('h2').innerText = '🎉 您已到达钟楼！';
-        questPopup.querySelector('p').innerText = '（已解锁）请开始“钟楼的低语”主线任务。';
+            // 【逻辑 B】: 如果“已完成”图书馆任务，并且靠近了钟楼
+            } else if (libraryComplete === true && distanceToB < TARGET_B_RADIUS) {
+                questPopup.style.display = 'block'; // 显示弹窗
+                questPopup.querySelector('h2').innerText = '🎉 您已到达钟楼！';
+                questPopup.querySelector('p').innerText = '（已解锁）请开始“钟楼的低语”主线任务。';
 
-        // 绑定按钮，让它跳转到“钟楼扫描页”
-        questButton.onclick = function() {
-            window.location.href = TARGET_B_URL;
-        };
+                questButton.onclick = function() {
+                    window.location.href = TARGET_B_URL;
+                };
 
-    // 【逻辑 C】: 不在任何区域内
-    } else {
-        questPopup.style.display = 'none'; // 隐藏弹窗
-    }
-}
+            // 【逻辑 C】: 不在任何区域内
+            } else {
+                questPopup.style.display = 'none'; // 隐藏弹窗
+            }
+        }
 
         // GPS 失败的回调
         function onError(error) {
@@ -153,7 +136,6 @@ function onSuccess(position) {
         }
 
         // --- (关键) 计算两个 GPS 点距离的函数 (Haversine 公式) ---
-        // (您不需要懂，只需要知道它能用)
         function getDistance(lat1, lon1, lat2, lon2) {
             const R = 6371e3; // 地球半径 (米)
             const φ1 = lat1 * Math.PI / 180;
