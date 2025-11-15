@@ -1,34 +1,14 @@
 <!DOCTYPE html>
 <html>
-  </script>
-
-    <style>
-        #capture-button {
-            display: none; /* 默认隐藏 */
-            position: fixed; /* 浮动在 AR 视图上 */
-            bottom: 30px; /* 距离底部 30px */
-            left: 50%; /* 水平居中 */
-            transform: translateX(-50%);
-            font-size: 1.5em;
-            padding: 20px 40px;
-            background: #007aff;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            z-index: 10000; /* 确保在最上层 */
-            cursor: pointer;
-        }
-    </style>
-    </head>
-  <head>
-    <title>我的 NFT 图像识别 AR</title>
+<head>
+    <title>NFT AR 扫描 (干净版)</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-  </head>
 
-  <body style="margin : 0px; overflow: hidden;">
-    
+    </head>
+
+<body style="margin : 0px; overflow: hidden;">
+
     <a-scene
       vr-mode-ui="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
@@ -39,66 +19,18 @@
         url="https://ll249512090-pixel.github.io/test/17eb9c1e470568469fec85672706f5ee" 
         smooth="true"
         smoothCount="10">
-        
-<a-sphere 
-        color="red" 
-        position="0 0.25 0" 
-        radius="0.15">
-    </a-sphere>
-    </a-nft>
+
+        <a-sphere 
+            color="red" 
+            position="0 0.25 0" 
+            radius="0.15">
+        </a-sphere>
+
+      </a-nft>
 
       <a-entity camera></a-entity>
-    
+
     </a-scene>
-...
-... (您所有的 <a-nft> 和 <a-entity camera> 都在这里) ...
 
-<a-plane 
-    id="click-proxy" 
-    position="0 0.25 0"  
-    scale="0.5 0.5 0.5" 
-    material="visible: false" 
-    proxy-click-handler> 
-</a-plane>
-
-<script>
-    // 我们在 A-Frame 中注册一个名叫 "proxy-click-handler" 的新组件
-    AFRAME.registerComponent('proxy-click-handler', {
-
-        // 初始化：当这个组件被 A-Frame 加载时
-        init: function () {
-            var el = this.el; // "el" 指的就是那个“看不见的” <a-plane>
-
-            // 当这个“看不见的”平面被“点击”时
-            el.addEventListener('click', function () {
-
-                // (这是我们熟悉的老朋友了)
-                // 1. 存档
-                localStorage.setItem('library_quest_complete', 'true');
-
-                // 2. 提示并跳转
-                alert('恭喜！获得线索A，即将返回主地图！');
-                window.location.href = 'https://ll249512090-pixel.github.io/test/';
-            });
-        }
-    });
-</script>
-</a-scene>
-</body>
+    </body>
 </html>
-  </body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
