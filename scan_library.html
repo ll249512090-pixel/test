@@ -26,8 +26,29 @@
       <a-entity camera></a-entity>
     
     </a-scene>
+    <script>
+    // 1. 找到那个红盒子
+    // (我们用 'a-box' 来选中它)
+    const box = document.querySelector('a-box');
+
+    // 2. 监听“点击”事件 (模拟“扫描成功”)
+    box.addEventListener('click', function () {
+        
+        // 3. (关键!) 在“浏览器存档”中写入“任务完成”
+        // 我们设置一个名叫 'library_quest_complete' 的变量，值为 'true'
+        localStorage.setItem('library_quest_complete', 'true');
+        
+        // 4. 提示用户
+        alert('恭喜！获得线索A，即将返回主地图！');
+        
+        // 5. (关键!) 跳回到“游戏大厅”
+        // (这个网址必须是您的主页网址)
+        window.location.href = 'https://ll249512090-pixel.github.io/test/';
+    });
+</script>
   </body>
 </html>
+
 
 
 
