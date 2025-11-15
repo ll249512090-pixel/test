@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>正在保存...</title>
+    <meta charset="UTF-8">
+    <script>
+        // (这就是“有毒”的脚本，但它在这个页面上是安全的)
+
+        // 1. (关键!) 在“浏览器存档”中写入“任务完成”
+        localStorage.setItem('library_quest_complete', 'true');
+
+        // 2. (关键!) 立即跳回到“游戏大厅”
+        window.location.replace('https://ll249512090-pixel.github.io/test/');
+    </script>
+</head>
+<body>
+    <p>正在保存进度并返回地图...</p>
+</body>
+</html>
