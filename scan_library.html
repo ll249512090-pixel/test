@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html>
+  </script>
+
+    <style>
+        #capture-button {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 浮动在 AR 视图上 */
+            bottom: 30px; /* 距离底部 30px */
+            left: 50%; /* 水平居中 */
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            padding: 20px 40px;
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            z-index: 10000; /* 确保在最上层 */
+            cursor: pointer;
+        }
+    </style>
+    </head>
   <head>
     <title>我的 NFT 图像识别 AR</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -26,28 +46,43 @@
       <a-entity camera></a-entity>
     
     </a-scene>
-    <script>
-    // 1. 找到那个红盒子
-    // (我们用 'a-box' 来选中它)
-    const box = document.querySelector('a-box');
+...
+</a-scene>
 
-    // 2. 监听“点击”事件 (模拟“扫描成功”)
-    box.addEventListener('click', function () {
-        
-        // 3. (关键!) 在“浏览器存档”中写入“任务完成”
-        // 我们设置一个名叫 'library_quest_complete' 的变量，值为 'true'
+<button id="capture-button">获取线索</button>
+
+<script>
+    // 1. 获取“AR标记”(<a-nft>) 和 “2D按钮”
+    const nftMarker = document.querySelector('a-nft');
+    const button = document.getElementById('capture-button');
+    const returnURL = 'https://ll249512090-pixel.github.io/test/'; // 您的主页
+
+    // 2. (关键) 监听“标记被找到”事件
+    nftMarker.addEventListener('markerFound', function() {
+        button.style.display = 'block'; // 显示 2D 按钮
+    });
+
+    // 3. (关键) 监听“标记丢失”事件
+    nftMarker.addEventListener('markerLost', function() {
+        button.style.display = 'none'; // 隐藏 2D 按钮
+    });
+
+    // 4. (关键) 监听“2D 按钮”的点击事件
+    button.addEventListener('click', function() {
+
+        // 5. 存档
         localStorage.setItem('library_quest_complete', 'true');
-        
-        // 4. 提示用户
+
+        // 6. 提示并跳转
         alert('恭喜！获得线索A，即将返回主地图！');
-        
-        // 5. (关键!) 跳回到“游戏大厅”
-        // (这个网址必须是您的主页网址)
-        window.location.href = 'https://ll249512090-pixel.github.io/test/';
+        window.location.href = returnURL;
     });
 </script>
+</body>
+</html>
   </body>
 </html>
+
 
 
 
