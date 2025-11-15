@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS 终极测试</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; font-size: 1.2em; }
+        button { font-size: 1.2em; padding: 15px; }
+        #status { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>GPS 终极测试</h1>
+    <p>请点击下面的按钮，看看浏览器是否会请求“位置”权限。</p>
+
+    <button id="testButton">点我测试 GPS</button>
+
+    <p id="status">状态：等待点击...</p>
+
+    <script>
+        // 当按钮被点击时
+        document.getElementById('testButton').onclick = function() {
+
+            // 1. 更新状态
+            var status = document.getElementById('status');
+            status.innerText = "状态：正在请求权限...";
+
+            // 2. 调用浏览器“原生”的 GPS API
+            navigator.geolocation.getCurrentPosition(
+
+                // 3. 成功的回调
+                function(position) {
+                    status.innerText = "✅ 成功！\n" +
+                        "纬度: " + position.coords.latitude + "\n" +
+                        "经度: " + position.coords.longitude;
+                },
+
+                // 4. 失败的回调
+                function(error) {
+                    status.innerText = "❌ 失败！\n" +
+                        "错误信息: " + error.message;
+                }
+            );
+        };
+    </script>
+</body>
+</html>
