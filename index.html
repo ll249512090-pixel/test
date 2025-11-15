@@ -47,15 +47,21 @@
     <script>
         // --- 您需要在这里配置您的游戏 ---
 
-        // 1. 设置您的“目标点” (比如图书馆)
-        // (请使用您刚刚在 gpstest.html 中测试成功的那个坐标！)
 // 1. 设置您的“目标点”
+
 // (目标点 A: 图书馆)
-// ‼️ 请替换为您“图书馆”（或您第一个目标点）的真实坐标
-const TARGET_A_LATITUDE = 34.2195645; // ‼️ 替换为您的“图书馆”纬度
-const TARGET_A_LONGITUDE = 117.1423631; // ‼️ 替换为您的“图书馆”经度
-const TARGET_A_RADIUS = 15; // 图书馆的触发半径
-const TARGET_A_URL = 'scan_library.html'; // 图书馆的扫描页 (这个已存在)
+// ‼️ 已更新为您的真实坐标和新半径
+const TARGET_A_LATITUDE = 34.2195645; // 您的“图书馆”纬度
+const TARGET_A_LONGITUDE = 117.1423631; // 您的“图书馆”经度
+const TARGET_A_RADIUS = 20; // ‼️ 已更新为 20 米
+const TARGET_A_URL = 'scan_library.html'; 
+
+// (目标点 B: 钟楼)
+// ‼️ 我为您设置了一个距离图书馆约 30-40 米的“假”坐标，用于测试
+const TARGET_B_LATITUDE = 34.2198645; // ‼️ 钟楼假纬度
+const TARGET_B_LONGITUDE = 117.1426631; // ‼️ 钟楼假经度
+const TARGET_B_RADIUS = 15; // 钟楼的触发半径
+const TARGET_B_URL = 'scan_belltower.html'; // (您之后需要创建这个)
 
 // (目标点 B: 钟楼)
 // (‼️ 您之后需要去室外获取“钟楼”的真实坐标)
