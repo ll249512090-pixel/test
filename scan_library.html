@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NFT AR 扫描 (最终版)</title>
+    <title>NFT AR 扫描 (图书馆-干净诊断版)</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+</head>
 
-    </head>
 <body style="margin : 0px; overflow: hidden;">
-
-    <a id="continue-button" href="save_clue.html">
-        我已看到线索 (点击继续)
-    </a>
-    <style>
-        /* 我们给这个按钮一点样式，让它浮动在底部 */
-        #continue-button {
-            position: fixed; /* 浮动 */
-            bottom: 30px; /* 距离底部 30px */
-            left: 50%; /* 水平居中 */
-            transform: translateX(-50%);
-            font-size: 1.2em;
-            padding: 20px 30px;
-            background: #007aff;
-            color: white;
-            border-radius: 12px;
-            z-index: 10000; /* 确保在最上层 */
-            text-decoration: none; /* 去掉下划线 */
-        }
-    </style>
 
     <a-scene
       vr-mode-ui="enabled: false;"
@@ -39,17 +19,17 @@
         smooth="true"
         smoothCount="10">
 
-        <a-box 
+        <a-sphere 
             color="red" 
-            position="0 0 0" 
-            scale="100 100 100">
-        </a-box>
+            position="0 0.25 0" 
+            radius="0.15">
+        </a-sphere>
 
       </a-nft>
 
       <a-entity camera></a-entity>
 
     </a-scene>
+
     </body>
 </html>
-
